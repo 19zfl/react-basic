@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js创建虚拟dom</title>
+</head>
+<body>
+    <!-- 准备一个容器提供给react使其发挥作用 -->
+    <div id="test"></div>
+
+    <!-- 引入React核心库 -->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入React-dom，用于支持React操作DOM -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+
+    <script type="text/javascript">
+        // 1.创建虚拟dom
+        // const VDOM = React.createElement(标签名, 标签属性, 标签内容)
+        // 单标签写法
+        // const VDOM = React.createElement('h1', {id: 'title'}, 'Hello React')
+        // 多标签写法
+        const VDOM = React.createElement('h1', {id: 'title'}, React.createElement('span', {}, 'Hello React'))
+        // 2.渲染虚拟dom到页面
+        // React 没有提供选择器的容器写法
+        ReactDOM.render(VDOM, document.getElementById('test'))
+    </script>
+</body>
+</html>

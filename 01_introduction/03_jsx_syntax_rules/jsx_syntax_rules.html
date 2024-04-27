@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsx语法规则</title>
+</head>
+<style>
+    .hsc {
+        background-color: orange;
+        width: 200px;
+    }
+</style>
+<body>
+    <!-- 准备一个容器提供给react使其发挥作用 -->
+    <div id="test"></div>
+
+    <!-- 引入React核心库 -->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入React-dom，用于支持React操作DOM -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx转换为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        const tagId = 'tItlE'
+        const tagCon = 'Hello React'
+        //1.创建虚拟DOM
+        const VDOM = (
+            <div>
+                <h2 className="hsc" id={tagId.toLowerCase()}>
+                    <span style={{color:'white', fontSize:'29px'}}>{tagCon.toUpperCase()}</span>
+                </h2>
+                <input type="text"/>
+            </div>
+        )
+        //2.渲染虚拟DOM
+        ReactDOM.render(VDOM, document.getElementById('test'))
+    </script>
+</body>
+</html>
