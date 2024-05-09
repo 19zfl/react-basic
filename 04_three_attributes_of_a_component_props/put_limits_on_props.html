@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对props进行限制</title>
+</head>
+<body>
+<!-- 准备一个容器提供给react使其发挥作用 -->
+<div id="test"></div>
+<div id="test1"></div>
+<div id="test2"></div>
+
+<!-- 引入React核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入React-dom，用于支持React操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转换为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    // 创建类式组件
+    class Person extends React.Component {
+        render() {
+            const {name, sex, age} = this.props
+            return (
+                <ul>
+                    <li>name：{name}</li>
+                    <li>sex：{sex}</li>
+                    <li>age：{age + 1}</li>
+                </ul>
+            )
+        }
+    }
+    const p = {name:'Tom', sex:'boy', age:19}
+    // 渲染组件到页面
+    ReactDOM.render(<Person {...p}/>, document.getElementById('test'))
+    ReactDOM.render(<Person name='Tony' sex='boy' age={20}/>, document.getElementById('test1'))
+    ReactDOM.render(<Person name='Sara' sex='girl' age={21}/>, document.getElementById('test2'))
+</script>
+</body>
+</html>
