@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>state属性</title>
+</head>
+<body>
+<!-- 准备一个容器提供给react使其发挥作用 -->
+<div id="test"></div>
+
+<!-- 引入React核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入React-dom，用于支持React操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转换为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    // 1. 创建类组件
+    class Weather extends React.Component {
+        // 构造器执行了几次？———— 1次
+        constructor(props) {
+            console.log('constructor被执行')
+            super(props)
+            this.state = {isHot:true,wind:'微风'}
+            this.update = this.changeWeather.bind(this)
+        }
+        // render执行了几次？———— 1+n次：1是初始化执行的1次，
+        render() {
+            // const {isHot, wind} = this.state
+            // console.log(this.state)
+            console.log('render被执行')
+            return <h1 onClick={this.update}>今天天气很{this.state.isHot ? '炎热' : '凉爽'}, {this.state.wind}</h1>
+        }
+
+        /**
+         * changeWeather放在哪里？————Weather的呀原型对象上，供实例对象使用
+         * 由于changeWeather是作为onClick的回调，所以不是通过实例对象调用的，是直接调用
+         * 类中的方法默认开启了局部的严格模式，所以changeWeather中的this为undefined
+         */
+        // changeWeather执行几次？———— 触发几次就执行几次
+        changeWeather() {
+            console.log('changeWeather被执行')
+            // 获取原来的isHot值
+            const isHot = this.state.isHot
+            // 状态（state）不可以直接更改，要借助一个内置api进行更改
+            // 这是直接更改
+            // this.state.isHot = !isHot
+            // 状态必须通过setState进行更新，且更新是一种合并，不是替换
+            this.setState({isHot : !isHot})
+        }
+    }
+    // 2. 渲染组件到页面
+    ReactDOM.render(<Weather/>, document.getElementById('test'))
+</script>
+</body>
+</html>
