@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生事件绑定</title>
+</head>
+<body>
+    <button id="btn1">按钮1</button>
+    <button id="btn2">按钮2</button>
+    <button onclick="btnClick()">按钮3</button>
+
+    <script type="text/javascript">
+        const btn1 = document.getElementById('btn1')
+        btn1.addEventListener('click', () => {
+            alert('btn1被点击了')
+        })
+        const btn2 = document.getElementById('btn2')
+        btn2.onclick = () => {
+            alert('btn2被点击了')
+        }
+        function btnClick() {
+            alert('btn3被点击了')
+        }
+    </script>
+</body>
+</html>

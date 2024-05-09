@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类中方法this指向</title>
+</head>
+<body>
+    <script type="text/javascript">
+        class Person {
+            constructor(name, age) {
+                this.name = name
+                this.age = age
+            }
+            speak() {
+                console.log(this)
+            }
+        }
+        const person = new Person('Tom', 19)
+        person.speak()
+        const temp = person.speak
+        temp()
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>展开运算符</title>
+</head>
+<body>
+    <script type="text/javascript">
+        const arr1 = [1, 2, 3, 4, 5]
+        const arr2 = ['s', 'sfs', 'w', 'th']
+        console.log(...arr1) // 展开一个数组
+        let arr3 = [...arr1, ...arr2] // 连接数组
+
+        function fun(...numbers) {
+            console.log('@', numbers)
+        }
+        fun(1, 2, 4, 5)
+
+        // 在函数中使用
+        function sum(...numbers) {
+            return numbers.reduce((previousValue, currentValue) => {
+                return previousValue + currentValue
+            })
+        }
+        console.log(sum(1, 2, 4, 5))
+
+        // 构造字面量对象时使用展开语法
+        let person = {name:'tom', age: 19}
+        // console.log(...person) // 这里是报错的，展开运算符不能展开对象
+        let person2 = {...person} // 这里person2是person的克隆对象
+        console.log(person2.name)
+
+        // 合并对象：克隆对象并对其属性值进行修改更新，还可以新增没有的属性
+        let person3 = {...person, name:'sam', address:'wuhan'}
+        console.log(person3);
+    </script>
+</body>
+</html>

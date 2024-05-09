@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+</head>
+<body>
+    <script type="text/javascript">
+        function get() {
+            console.log(this)
+        }
+        get()
+        const x = get.bind({a:1,b:1})
+        x()
+        // function demo() {
+        //     'use strict'
+        //     console.log(this)
+        // }
+        // demo()
+    </script>
+</body>
+</html>
