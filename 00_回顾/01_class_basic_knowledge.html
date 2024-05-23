@@ -62,6 +62,18 @@
         const car2 = new Car('小米SU7 Max', 29)
         console.log(car1);
         console.log(car2);
+
+        class Room {
+            constructor(size, height) {
+                this.size = size
+                this.height = height
+            }
+            owner = "Suzon" // 这是给类的实例对象追加的属性
+            static content = "bed" // 这是给类本身追加的属性
+        }
+        const room1 = new Room(400, 2.5)
+        console.log(room1)
+        console.log(Room.content)
     </script>
 </body>
 </html>
