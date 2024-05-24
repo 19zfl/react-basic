@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06_演示函数的柯里化</title>
+</head>
+<body>
+<script type="text/javascript">
+    /*常规写法*/
+    function sum(a, b, c) {
+        return a+b+c
+    }
+    const result1 = sum(1,2,3)
+    console.log(result1)
+
+    /*柯里化*/
+    function getAll(a) {
+        return(b)=>{
+            return(c)=>{
+                return a+b+c
+            }
+        }
+    }
+    const result2 = getAll(1)(2)(3)
+    console.log(result2)
+</script>
+</body>
+</html>
