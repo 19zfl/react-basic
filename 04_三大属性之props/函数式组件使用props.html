@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数式组件使用props</title>
+</head>
+<body>
+<!-- 准备一个容器提供给react使其发挥作用 -->
+    <div id="test"></div>
+
+<!-- 引入React核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入React-dom，用于支持React操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转换为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<!-- 引入prop-types，用于对组件标签属性进行限制 -->
+<script type="text/javascript" src="../js/prop-types.js"></script>
+
+<script type="text/babel">
+    function Person(props) {
+        console.log(props)
+        const {name, sex, age} = props
+        return (
+            <ul>
+                <li>姓名：{name}</li>
+                <li>性别：{sex}</li>
+                <li>年龄：{age}</li>
+            </ul>
+        )
+    }
+    Person.propTypes = {
+        name:PropTypes.string.isRequired, // 对名称属性进行要求：必须式string类型，且必须填写
+        sex:PropTypes.string, //对性别属性进行要求：必须是string类型
+        age:PropTypes.number, // 对年龄属性进行要求：必须是number类型
+    }
+    Person.defaultProps = {
+        sex:'未知'
+    }
+    ReactDOM.render(<Person name="lovejoy" age={18}/>, document.getElementById('test'))
+</script>
+</body>
+</html>
