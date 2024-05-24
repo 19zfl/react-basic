@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_高阶函数与函数柯里化</title>
+</head>
+<body>
+<div id="test"></div>
+<!-- 引入React核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入React-dom，用于支持React操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转换为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<!-- 引入prop-types，用于对组件标签属性进行限制 -->
+<script type="text/javascript" src="../js/prop-types.js"></script>
+
+<script type="text/babel">
+    class Login extends React.Component {
+        // 初始化状态
+        state = {
+            username: '',
+            password: ''
+        }
+        saveFormData = (dataType, event) => {
+            this.setState({[dataType]:event.target.value})
+        }
+        handleSubmit = (event)=> {
+            event.preventDefault() // 阻止表单提交
+            alert(`你输入的用户名为：${this.state.username}，你输入的密码为：${this.state.password}`)
+        }
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    用户名：<input onChange={(event)=>{this.saveFormData('username', event)}} name="username" type="text"/><br/>
+                    密码：<input onChange={(event)=>{this.saveFormData('password', event)}} name="password" type="password"/><br/>
+                    <button>登录</button>
+                </form>
+            )
+        }
+    }
+    ReactDOM.render(<Login/>, document.getElementById('test'))
+</script>
+</body>
+</html>
