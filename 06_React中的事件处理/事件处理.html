@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件处理</title>
+</head>
+<body>
+<!-- 准备一个容器提供给react使其发挥作用 -->
+<div id="test"></div>
+
+<!-- 引入React核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入React-dom，用于支持React操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转换为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<!-- 引入prop-types，用于对组件标签属性进行限制 -->
+<script type="text/javascript" src="../js/prop-types.js"></script>
+
+<script type="text/babel">
+    class ReactInput extends React.Component {
+        // 创建ref容器
+        myInputRef = React.createRef()
+        showData = ()=>{
+            alert(this.myInputRef.current.value)
+        }
+        showBlur = (event)=>{
+            alert(event.target.value)
+        }
+        render() {
+            return (
+                <div>
+                    <input ref={this.myInputRef} type="text" placeholder="点击左侧按钮提示数据"/>&nbsp;
+                    <button onClick={this.showData}>点击提示左侧数据</button>&nbsp;
+                    <input onBlur={this.showBlur} type="text" placeholder="点击左侧按钮提示数据"/>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<ReactInput/>, document.getElementById('test'))
+</script>
+</body>
+</html>
