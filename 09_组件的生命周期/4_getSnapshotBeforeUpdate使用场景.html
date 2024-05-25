@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4_getSnapshotBeforeUpdate使用场景</title>
+    <style type="text/css">
+        .list {
+            width: 200px;
+            height: 150px;
+            background-color: skyblue;
+            overflow: auto;
+        }
+        .news {
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div id="test"></div>
+
+<!-- 引入React核心库 -->
+<script type="text/javascript" src="../js/17.0.2/react.development.js"></script>
+<!-- 引入React-dom，用于支持React操作DOM -->
+<script type="text/javascript" src="../js/17.0.2/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转换为js -->
+<script type="text/javascript" src="../js/17.0.2/babel.min.js"></script>
+<!-- 引入prop-types，用于对组件标签属性进行限制 -->
+<script type="text/javascript" src="../js/17.0.2/prop-types.js"></script>
+
+<script type="text/babel">
+    class News extends React.Component {
+        state = {
+            newsArr : []
+        }
+        componentDidMount() {
+            setInterval(()=>{
+                // 获取原状态
+                let {newsArr} = this.state
+                const news = '新闻' + (newsArr.length+1)
+                // 更新状态
+                this.setState({newsArr:[news,...newsArr]})
+            }, 1000)
+        }
+        getSnapshotBeforeUpdate() {
+            console.log(this.refs.list.scrollHeight)
+            return this.refs.list.scrollHeight
+        }
+        componentDidUpdate(prevProps, prevState, snapshotValue) {
+            this.refs.list.scrollTop += this.refs.list.scrollHeight - snapshotValue
+        }
+        // 组件渲染，组件更新执行
+        render() {
+            return (
+                <div className="list" ref="list">
+                    {
+                        this.state.newsArr.map((name, index)=>{
+                            return <div className="news" key={index}>{name}</div>
+                        })
+                    }
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<News/>, document.getElementById('test'))
+</script>
+</body>
+</html>
