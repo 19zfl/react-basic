@@ -17,14 +17,40 @@
 <script type="text/javascript" src="../js/prop-types.js"></script>
 
 <script type="text/babel">
+    /*生命周期回调函数 == 生命周期钩子函数 == 生命周期函数 == 生命周期钩子*/
     class Life extends React.Component {
         state = {
             opacity: 1
         }
+        action = () => {
+            setInterval(() => {
+                // 获取原状态
+                let opacity = this.state.opacity
+                opacity -= 0.1
+                if (opacity <= 0) opacity = 1
+                this.setState({opacity})
+            }, 200)
+        }
         dead = () => {
+            // 关闭setInterval
+            // clearInterval(this.timer)
             // 卸载组件
             ReactDOM.unmountComponentAtNode(document.getElementById('test'))
         }
+        // 组件将要被卸载之前执行
+        componentWillUnmount() {
+            clearInterval(this.timer)
+        }
+        // 组件挂载完毕之后执行一次
+        componentDidMount() {
+            this.timer = setInterval(()=>{
+                let opacity = this.state.opacity
+                opacity -= 0.1
+                if (opacity <= 0) opacity = 1
+                this.setState({opacity})
+            }, 200)
+        }
+        // 组件初始化渲染，状态更新之后
         render() {
             return(
                 <div>

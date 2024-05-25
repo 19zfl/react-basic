@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_React生命周期（旧）</title>
+</head>
+<body>
+<div id="test"></div>
+
+<!-- 引入React核心库 -->
+<script type="text/javascript" src="../js/react.development.js"></script>
+<!-- 引入React-dom，用于支持React操作DOM -->
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<!-- 引入babel，用于将jsx转换为js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<!-- 引入prop-types，用于对组件标签属性进行限制 -->
+<script type="text/javascript" src="../js/prop-types.js"></script>
+
+<script type="text/babel">
+    class Count extends React.Component {
+        constructor(props) {
+            console.log('Count---constructor')
+            super(props);
+            // 初始化状态
+            this.state = {count : 0}
+        }
+        // 组件将要被挂载之前执行
+        componentWillMount() {
+            console.log('Count---componentWillMount')
+        }
+        // 控制组件更新的阀门，不写此函数默认是true，写了就要写return语句进行返回boolean类型变量
+        shouldComponentUpdate() {
+            console.log('Count---shouldComponentUpdate')
+            return false
+        }
+        // 组件将要更新的钩子
+        componentWillUpdate() {
+            console.log('Count---componentWillUpdate')
+        }
+        // 组件渲染，组件更新执行
+        render() {
+            console.log('Count---render')
+            const {count} = this.state
+            return (
+                <div>
+                    <h2>当前求和为：{count}</h2>
+                    <button onClick={this.add}>点我+1</button>
+                    <button onClick={this.dead}>卸载组件</button>
+                    <button onClick={this.force}>强制更新</button>
+                </div>
+            )
+        }
+        // 组件更新完成的钩子
+        componentDidUpdate() {
+            console.log('Count---componentDidUpdate')
+        }
+        // 组件初次挂载完毕之后执行一次
+        componentDidMount() {
+            console.log('Count---componentDidMount')
+        }
+        // 组件将要被卸载之前执行一次
+        componentWillUnmount() {
+            console.log('Count---componentWillUnmount')
+        }
+        add=()=>{
+            // 获取原状态
+            const {count} = this.state
+            // 更新状态
+            this.setState({count: count+1})
+        }
+        dead=()=>{
+            ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+        }
+        force=()=>{
+            this.forceUpdate()
+        }
+    }
+
+    class A extends React.Component {
+        state = {
+            carName: '奔驰'
+        }
+        changeCar= ()=> {
+            this.setState({carName: '奥拓'})
+        }
+        render() {
+            return(
+                <div>
+                    <h1>我是A组件</h1>
+                    <button onClick={this.changeCar}>换车</button>
+                    <B carName={this.state.carName}/>
+                </div>
+            )
+        }
+    }
+
+    class B extends React.Component {
+        // 也可以接收到props的，在括号添加
+        componentWillReceiveProps() {
+            console.log('B---componentWillReceiveProps')
+        }
+        // 控制组件更新的阀门，不写此函数默认是true，写了就要写return语句进行返回boolean类型变量
+        shouldComponentUpdate() {
+            console.log('B---shouldComponentUpdate')
+            return true
+        }
+        // 组件将要更新的钩子
+        componentWillUpdate() {
+            console.log('B---componentWillUpdate')
+        }
+        render() {
+            console.log('B---render')
+            return(
+                <div>
+                    <h1>我是B组件，我接受到的车是：{this.props.carName}</h1>
+                </div>
+            )
+        }
+        // 组件更新完成的钩子
+        componentDidUpdate() {
+            console.log('B---componentDidUpdate')
+        }
+    }
+
+    ReactDOM.render(<A/>, document.getElementById('test'))
+</script>
+</body>
+</html>
