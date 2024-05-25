@@ -149,7 +149,7 @@ React高效的原因：
 - React组件对象包含一系列钩子函数（生命周期回调函数），在特定的时刻调用
 - 我们在定义组件时，在特定的生命周期回调函数中做特定的工作
 
-生命周期的三个阶段（旧）：
+##### 生命周期的三个阶段（旧）：
 
 1. 初始化阶段：有ReactDOM.render()触发一次渲染
    1. constructor()
@@ -163,3 +163,59 @@ React高效的原因：
    4. componentDidUpdate()
 3. 卸载组件：有ReactDOM.unmountComponentAtNode()触发
    1. componentWillUnmount() ==> 常用：一般在这个钩子中做一些收尾的事，例如：关闭定时器、取消订阅消息等等
+
+##### 生命周期的三个阶段（新）：
+
+1. 初始化阶段：由ReactDOM.render()触发第一次渲染
+   1. constructor()
+   2. getDerivedStateFromProps()
+   3. render()
+   4. componentDidMount()
+2. 更新阶段：由组件内部this.setState()或父组件重新render触发
+   1. getDerivedStateFromProps()
+   2. shouldComponentUpdate()
+   3. render()
+   4. getSnapshotBeforeUpdate()
+   5. componentDidUpdate()
+3. 卸载组件：由ReactDOM.unmountComponentAtNode()触发
+   1. componentWillUnmount()
+
+>getSnapshotBeforeUpdate()在最近一次渲染输出（提交到DOM节点）之前调用。它使得组件能在发生更改之前从DOM中捕获一些信息（例如，滚动位置）。此生命周期的任何返回值将作为参数传递给componentDidUpdate()，
+
+##### 重要的钩子函数
+
+1. render：初始化渲染或者更新渲染调用
+2. componentDidMount：开启监听，发送ajax请求
+3. componentWillUnmount：做一些收尾工作，如：清理定时器
+
+##### 即将废弃的钩子函数
+
+1. componentWillMount
+2. componentWillReceiveProps
+3. componentWillUpdate
+
+> 现在使用会出现警告，下一个大版本需要加上UNSAFE_前缀才能使用，以后可能会被彻底废弃，不建议使用
+
+#### 虚拟DOM与DOM Diffing算法
+
+1. 虚拟DOM中key的作用：
+
+   1. 简单地说：key是虚拟DOM对象的标识，在更新显示时key是起着极其重要的作用。
+
+   2. 详细地说：当状态中的数据发生变化时，React会根据【新数据】生成【新的虚拟DOM】，随后React进行【新虚DOM】与【旧虚拟DOM】的diffing比较，比较规则如下：
+
+      1. 旧虚拟DOM中找到了与新虚拟DOM相同的key：
+         1. 若虚拟DOM中内容未变，直接使用之前的真实DOM
+         2. 若虚拟DOM中内容未变，则生成新的真实DOM，随后替换掉页面中之前的真实DOM
+
+      2. 旧虚拟DOM中未找到与新虚拟DOM相同的key：
+         1. 根据数据创建新的虚拟DOM，随后渲染到页面
+
+2. 用index作为key可能会引发的问题：
+   1. 若对数据进行：逆序添加、逆序删除等破坏顺序操作，会产生没有必要的真实DOM更新==>界面效果没有问题，但效率低
+   2. 如果结构中还包含输入类的DOM，会产生错误DOM更新==>界面有问题
+   3. 注意：如果不存在对数据进行逆序添加、逆序删除等破坏顺序操作，仅用于渲染列表用于展示，使用index作为key没有问题
+
+3. 开发中如何选择key？
+   1. 最好使用每条数据的唯一标识作为key，比如：id、手机号、身份证号、学号等
+   2. 如果确定知识简单的展示数据，用index也是可以的
