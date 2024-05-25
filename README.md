@@ -143,8 +143,23 @@ React高效的原因：
 - 高阶函数
 - 函数柯里化
 
-#### 组件声明周期
+#### 组件生命周期
 
 - 组件对象从创建到死亡它会经历特定阶段
 - React组件对象包含一系列钩子函数（生命周期回调函数），在特定的时刻调用
 - 我们在定义组件时，在特定的生命周期回调函数中做特定的工作
+
+生命周期的三个阶段（旧）：
+
+1. 初始化阶段：有ReactDOM.render()触发一次渲染
+   1. constructor()
+   2. componentWillMount()
+   3. render() ==> 常用
+   4. componentDidMount() ==> 常用：一般在这个钩子中做一些初始化的事情，例如：开启定时器、发送网络请求、订阅消息等等
+2. 更新阶段：有组件内部this.setState()或父组件重新render触发
+   1. shouldComponentUpdate()
+   2. componentWillUpdate()
+   3. render()
+   4. componentDidUpdate()
+3. 卸载组件：有ReactDOM.unmountComponentAtNode()触发
+   1. componentWillUnmount() ==> 常用：一般在这个钩子中做一些收尾的事，例如：关闭定时器、取消订阅消息等等
